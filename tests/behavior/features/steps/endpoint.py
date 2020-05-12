@@ -1,0 +1,13 @@
+from behave import when, then
+from requests import post
+from json import loads
+
+
+@when('enviar o Json')
+def request_api_with_json(context):
+    context.api_request = post(context.base_url, json=loads(context.text))
+
+
+@then('a API deve retornar {status_code:d}')
+def check_api_response(context, status_code):
+    assert context.api_request.status_code == status_code
